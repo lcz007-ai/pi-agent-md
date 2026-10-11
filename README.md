@@ -8,18 +8,7 @@
 - [`APPEND_SYSTEM.md`](APPEND_SYSTEM.md)：个人补充规则范本，由 Pi 追加到默认 system prompt；其中含有个人环境和模型路由偏好，复制前请按自己的环境修改。
 - [`2026-10-11-项目AGENTS模板.md`](2026-10-11-项目AGENTS模板.md)：项目级模板。复制到项目根目录并命名为 `AGENTS.md`，只填写该项目特有、助手不易推断且经常需要的事实。
 
-## Pi 如何加载指令
 
-Pi 从启动时的工作目录确定项目范围，并组合 system prompt、对话历史、工具和已发现的上下文资源。可把指令分成两类理解：
-
-1. **上下文文件**：agent 目录、当前工作目录及其父目录中的 `AGENTS.md`、`AGENTS.MD`、`CLAUDE.md` 等会作为适用目录的项目/全局说明加载。`AGENTS.override.md` 只替代同目录的 `AGENTS.md` 或 `CLAUDE.md`，不影响其他目录的上下文文件。
-2. **系统提示文件**：`<agent-dir>/APPEND_SYSTEM.md` 为 Pi 默认 system prompt 追加内容；`<agent-dir>/SYSTEM.md` 则整体替换默认 system prompt。项目级对应文件放在 `.pi/APPEND_SYSTEM.md` 或 `.pi/SYSTEM.md`。获信任后，项目级同名系统提示文件优先于个人 agent 目录中的文件，**不是与个人文件合并**。
-
-默认 agent 目录是 `~/.pi/agent`，可由 `PI_CODING_AGENT_DIR` 更改。Windows 默认通常对应 `%USERPROFILE%\.pi\agent`。因此，本仓库中的 `APPEND_SYSTEM.md` 需要复制到该目录后才作为个人追加规则生效；只放在仓库根目录不会自动加载。
-
-项目 `.pi/settings.json` 及 `.pi/extensions`、`.pi/skills`、`.pi/prompts`、`.pi/themes` 等项目资源受项目信任控制。`AGENTS.md` 等上下文文件仍可能在未信任项目时加载；把项目设为可信也不等于沙箱，工具和扩展仍受 Pi 进程本身的操作系统权限约束。对陌生项目、指令和扩展应先检查。
-
-修改活动会话中的指令、设置或资源后，可运行 `/reload` 重新加载。Pi 的启动摘要可显示本次加载的上下文和资源。
 
 ## 如何个性化
 
@@ -47,6 +36,21 @@ APPEND_SYSTEM.md   → <agent-dir>/APPEND_SYSTEM.md
 ### 配置为项目规则
 
 复制 [`2026-10-11-项目AGENTS模板.md`](2026-10-11-项目AGENTS模板.md) 到目标项目根目录并重命名为 `AGENTS.md`，填入该项目的技术栈、命令、约束和已知坑。项目级 system prompt 或设置放在项目 `.pi/` 目录，并注意项目信任提示。
+
+# 附录
+ 
+## Pi 如何加载指令
+
+Pi 从启动时的工作目录确定项目范围，并组合 system prompt、对话历史、工具和已发现的上下文资源。可把指令分成两类理解：
+
+1. **上下文文件**：agent 目录、当前工作目录及其父目录中的 `AGENTS.md`、`AGENTS.MD`、`CLAUDE.md` 等会作为适用目录的项目/全局说明加载。`AGENTS.override.md` 只替代同目录的 `AGENTS.md` 或 `CLAUDE.md`，不影响其他目录的上下文文件。
+2. **系统提示文件**：`<agent-dir>/APPEND_SYSTEM.md` 为 Pi 默认 system prompt 追加内容；`<agent-dir>/SYSTEM.md` 则整体替换默认 system prompt。项目级对应文件放在 `.pi/APPEND_SYSTEM.md` 或 `.pi/SYSTEM.md`。获信任后，项目级同名系统提示文件优先于个人 agent 目录中的文件，**不是与个人文件合并**。
+
+默认 agent 目录是 `~/.pi/agent`，可由 `PI_CODING_AGENT_DIR` 更改。Windows 默认通常对应 `%USERPROFILE%\.pi\agent`。因此，本仓库中的 `APPEND_SYSTEM.md` 需要复制到该目录后才作为个人追加规则生效；只放在仓库根目录不会自动加载。
+
+项目 `.pi/settings.json` 及 `.pi/extensions`、`.pi/skills`、`.pi/prompts`、`.pi/themes` 等项目资源受项目信任控制。`AGENTS.md` 等上下文文件仍可能在未信任项目时加载；把项目设为可信也不等于沙箱，工具和扩展仍受 Pi 进程本身的操作系统权限约束。对陌生项目、指令和扩展应先检查。
+
+修改活动会话中的指令、设置或资源后，可运行 `/reload` 重新加载。Pi 的启动摘要可显示本次加载的上下文和资源。
 
 ## Pi 官方文档
 
