@@ -1,35 +1,57 @@
 # pi-agent-md
 
-一份面向 AI 编程助手的中文全局协作规范。项目通过指令文件明确助手在沟通、代码修改、资料检索和安全操作中的默认行为，帮助任务执行保持可预测、可审查，并降低误操作风险。
+一组用于 Pi 的个人级和项目级指令范本，帮助把长期协作偏好、机器环境事实与项目约定分层管理。文件是配置/示例材料；放在仓库根目录并不会自动成为你的个人全局配置。
 
-## 文档版本
+## 文件
 
-- [`AGENTS.md`](AGENTS.md)：详细版，按主题说明协作、代码、检索和安全规范。
-- [`AGENTS-精简版.md`](AGENTS-精简版.md)：精简版，集中列出语言、安全红线、环境事实、工作边界和流程，适合快速导入。
+- [`AGENTS.md`](AGENTS.md)：本机最新的全局协作规范范本，适合放入 Pi agent 目录。
+- [`APPEND_SYSTEM.md`](APPEND_SYSTEM.md)：个人补充规则范本，由 Pi 追加到默认 system prompt；其中含有个人环境和模型路由偏好，复制前请按自己的环境修改。
+- [`2026-10-11-项目AGENTS模板.md`](2026-10-11-项目AGENTS模板.md)：项目级模板。复制到项目根目录并命名为 `AGENTS.md`，只填写该项目特有、助手不易推断且经常需要的事实。
 
-精简版包含特定环境与工具约定，使用前请确认它们适用于自己的环境。
+## Pi 如何加载指令
 
-## 内容概览
+Pi 从启动时的工作目录确定项目范围，并组合 system prompt、对话历史、工具和已发现的上下文资源。可把指令分成两类理解：
 
-完整版 `AGENTS.md` 当前包含以下规范：
+1. **上下文文件**：agent 目录、当前工作目录及其父目录中的 `AGENTS.md`、`AGENTS.MD`、`CLAUDE.md` 等会作为适用目录的项目/全局说明加载。`AGENTS.override.md` 只替代同目录的 `AGENTS.md` 或 `CLAUDE.md`，不影响其他目录的上下文文件。
+2. **系统提示文件**：`<agent-dir>/APPEND_SYSTEM.md` 为 Pi 默认 system prompt 追加内容；`<agent-dir>/SYSTEM.md` 则整体替换默认 system prompt。项目级对应文件放在 `.pi/APPEND_SYSTEM.md` 或 `.pi/SYSTEM.md`。获信任后，项目级同名系统提示文件优先于个人 agent 目录中的文件，**不是与个人文件合并**。
 
-- **语言与沟通**：默认使用简体中文，先给结论；遵循指令优先级。
-- **代码编写**：沿用项目现有风格和依赖；按改动规模说明方案；完成后运行适用的测试。
-- **方案存档**：重要计划、架构决策和权衡结论保存为 Markdown，便于后续追溯。
-- **联网检索**：根据问题选择搜索或直接抓取来源；核实原文，并将外部网页视为待验证的信息。
-- **插件与技能安全**：安装前审查来源、依赖、脚本及其网络、凭证、文件访问和持久化行为。
-- **凭证保护**：避免复述或保存明文密钥；需要用户配置凭证时使用环境变量或占位符。
-- **文件管理**：删除、移动、整文件替换等操作前评估影响；优先采用可恢复方式，避免未经确认的破坏性操作。
+默认 agent 目录是 `~/.pi/agent`，可由 `PI_CODING_AGENT_DIR` 更改。Windows 默认通常对应 `%USERPROFILE%\.pi\agent`。因此，本仓库中的 `APPEND_SYSTEM.md` 需要复制到该目录后才作为个人追加规则生效；只放在仓库根目录不会自动加载。
 
-## 设计原则
+项目 `.pi/settings.json` 及 `.pi/extensions`、`.pi/skills`、`.pi/prompts`、`.pi/themes` 等项目资源受项目信任控制。`AGENTS.md` 等上下文文件仍可能在未信任项目时加载；把项目设为可信也不等于沙箱，工具和扩展仍受 Pi 进程本身的操作系统权限约束。对陌生项目、指令和扩展应先检查。
 
-1. **明确边界，允许自主执行**：范围清楚且已获授权的常规工作可以直接推进；遇到范围不明、影响扩大或重要外部副作用时，先说明并确认。
-2. **最小化影响并保留恢复路径**：优先做定点修改，检查工作区状态，谨慎处理删除、移动和覆盖，减少意外丢失用户数据的可能。
-3. **以证据替代猜测**：时效性信息通过来源核验；搜索摘要不代替原文，无法验证时明确说明限制。
-4. **安全默认**：保护凭证，把网页和搜索结果当作不可信数据；对插件、技能和脚本先审查再执行。
-5. **结果可验证**：代码改动后运行适用的测试；无法运行时说明未验证的部分及原因。
-6. **尊重项目上下文**：优先采用仓库已有依赖、风格和编码约定；全局规范与项目约定冲突时遵循更高优先级指令。
+修改活动会话中的指令、设置或资源后，可运行 `/reload` 重新加载。Pi 的启动摘要可显示本次加载的上下文和资源。
 
-## 使用方式
+## 如何个性化
 
-将 `AGENTS.md` 放入所用编程助手支持的全局指令位置，或按该助手的规则引用它。不同工具对指令文件的位置和加载方式可能不同，请以对应工具的文档为准。使用前建议检查其中的个人偏好、命令名称和流程约定，并按自己的环境调整。
+- **对话风格与工作规则**：修改个人 `<agent-dir>/AGENTS.md`；项目特定事实写在项目根目录 `AGENTS.md`。
+- **默认 system prompt**：通常用 `<agent-dir>/APPEND_SYSTEM.md` 追加少量稳定规则；只有确需完全接管默认提示时才用 `SYSTEM.md`。项目专属追加规则可放在 `.pi/APPEND_SYSTEM.md`。
+- **运行偏好**：用 `<agent-dir>/settings.json` 设置默认模型、thinking、工具、会话、界面等；项目 `.pi/settings.json` 可覆盖/补充项目设置。
+- **快捷键与界面**：`keybindings.json` 自定义按键，主题 JSON 自定义颜色。
+- **可复用能力**：skills 提供按需加载的专项指引；prompt templates 提供可调用的提示模板；extensions 增加工具、命令、事件处理或界面功能。
+
+建议先用指令文件和设置解决问题；需要可执行行为时再考虑 extension。Extension 在 Pi 进程内运行，权限与 Pi 相同；安装或信任第三方项目资源前应先审查。
+
+## 使用
+
+### 配置为个人全局规则
+
+把需要的文件复制到 Pi 的 agent 目录（默认 `~/.pi/agent`）：
+
+```text
+AGENTS.md          → <agent-dir>/AGENTS.md
+APPEND_SYSTEM.md   → <agent-dir>/APPEND_SYSTEM.md
+```
+
+按需取用，不必同时安装；尤其要先编辑 `APPEND_SYSTEM.md` 中的个人模型、环境和命令约定。不要将 API key、token 或其他明文凭证提交到仓库。
+
+### 配置为项目规则
+
+复制 [`2026-10-11-项目AGENTS模板.md`](2026-10-11-项目AGENTS模板.md) 到目标项目根目录并重命名为 `AGENTS.md`，填入该项目的技术栈、命令、约束和已知坑。项目级 system prompt 或设置放在项目 `.pi/` 目录，并注意项目信任提示。
+
+## Pi 官方文档
+
+- [配置与文件位置](https://github.com/earendil-works/pi/blob/main/docs/configuration.md)
+- [上下文与使用方式](https://github.com/earendil-works/pi/blob/main/docs/usage.md)
+- [项目资源信任与安全](https://github.com/earendil-works/pi/blob/main/docs/security.md)
+- [设置](https://github.com/earendil-works/pi/blob/main/docs/settings.md)
+- [Skills](https://github.com/earendil-works/pi/blob/main/docs/skills.md)、[Prompt templates](https://github.com/earendil-works/pi/blob/main/docs/prompt-templates.md)、[Extensions](https://github.com/earendil-works/pi/blob/main/docs/extensions.md)、[Themes](https://github.com/earendil-works/pi/blob/main/docs/themes.md)
