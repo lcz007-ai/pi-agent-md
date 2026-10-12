@@ -10,32 +10,48 @@
 
 
 
+## 具体使用
+ 
+### 1.配置全局(必须)
+ 
+把需要的文件复制到 Pi 的 agent 目录（默认 `~/.pi/agent`）：
+
+```text
+AGENTS.md          → <agent-dir>/AGENTS.md
+```
+ 
+### 2.配置记忆(可选)
+ 
+按需取用:
+- 注意把`(for mac)`这些后缀去掉
+- 对个人模型、环境和插件工具的约定,按需调整。
+- 不要将 API key、token 等明文凭证放入其中.
+  
+```text
+APPEND_SYSTEM.md   → <agent-dir>/APPEND_SYSTEM.md
+```
+   
+### 3.项目规则(可选)
+ 
+按需取用:
+- 手动复制 [`项目AGENTS模板.md`](项目AGENTS模板.md) 到目标项目根目录并重命名为 `AGENTS.md`,**再让AI填写具体内容**.
+- 填入该项目的技术栈、命令、约束和已知坑。项目级 system prompt 或设置放在项目 `.pi/` 目录，并注意项目信任提示。
+ 
+```text
+APPEND_SYSTEM.md   → <project-dir>/AGENTS.md
+```
+
+
 ## 如何个性化
 
 - **对话风格与工作规则**：修改个人 `<agent-dir>/AGENTS.md`；项目特定事实写在项目根目录 `AGENTS.md`。
-- **默认 system prompt**：通常用 `<agent-dir>/APPEND_SYSTEM.md` 追加少量稳定规则；只有确需完全接管默认提示时才用 `SYSTEM.md`。项目专属追加规则可放在 `.pi/APPEND_SYSTEM.md`。
+- **默认system prompt**：通常用 `<agent-dir>/APPEND_SYSTEM.md` 追加少量稳定规则；只有确需完全接管默认提示时才用 `SYSTEM.md`。
 - **运行偏好**：用 `<agent-dir>/settings.json` 设置默认模型、thinking、工具、会话、界面等；项目 `.pi/settings.json` 可覆盖/补充项目设置。
 - **快捷键与界面**：`keybindings.json` 自定义按键，主题 JSON 自定义颜色。
 - **可复用能力**：skills 提供按需加载的专项指引；prompt templates 提供可调用的提示模板；extensions 增加工具、命令、事件处理或界面功能。
 
 建议先用指令文件和设置解决问题；需要可执行行为时再考虑 extension。Extension 在 Pi 进程内运行，权限与 Pi 相同；安装或信任第三方项目资源前应先审查。
 
-## 使用
-
-### 配置全局规则
-
-把需要的文件复制到 Pi 的 agent 目录（默认 `~/.pi/agent`）：
-
-```text
-AGENTS.md          → <agent-dir>/AGENTS.md
-APPEND_SYSTEM.md   → <agent-dir>/APPEND_SYSTEM.md
-```
-
-按需取用，不必同时安装；尤其要先编辑 `APPEND_SYSTEM.md` 中的个人模型、环境和命令约定。不要将 API key、token 或其他明文凭证提交到仓库。
-
-### 配置项目规则
-
-复制 [`2项目AGENTS模板.md`](2026-10-11-项目AGENTS模板.md) 到目标项目根目录并重命名为 `AGENTS.md`，填入该项目的技术栈、命令、约束和已知坑。项目级 system prompt 或设置放在项目 `.pi/` 目录，并注意项目信任提示。
 
 # 附录
  
