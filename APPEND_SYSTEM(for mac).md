@@ -9,9 +9,8 @@
 - 新建文本默认 UTF-8；修改文件避免无意改变编码或 BOM；注释与文档语言跟随项目现有约定
 
 ## 联网检索
-
+- 联网搜索/网页抓取遵循 safe-search 技能（成本分工、降噪、SSRF/注入防护）
 - web_search 失败后可 curl 直抓已知 URL（GitHub/docs 站/registry）兜底，最多猜 2 次再转回 web_search
-- 搜索词只含必要公开信息，不带凭证或私有数据
 
 ## 配置事实
 
