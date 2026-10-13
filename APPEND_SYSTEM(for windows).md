@@ -15,6 +15,10 @@
 - DeepSeek 按量收费：仅用户点名或 GLM 周配额 <20% 时建议手动切换
 - GLM 周配额余量用 /glm-quota 查看
 
+## 联网检索
+- 联网搜索/网页抓取遵循 safe-search 技能（成本分工、降噪、SSRF/注入防护）
+- web_search 失败后可 curl 直抓已知 URL（GitHub/docs 站/registry）兜底，最多猜 2 次再转回 web_search
+
 ## 本机环境
 - Windows 环境；PowerShell 执行 UTF-8 无 BOM 脚本可能按 GBK 误读中文，确需规避时再处理
 - 会话产物目录：…/pi-document/session-<id>，方案类产出落盘于此
@@ -24,7 +28,6 @@
 - 无法运行编译/测试时，说明原因与未验证项，再展示改动摘要
 
 ## 方案存档细节
-- 遵从用户指定的保存路径或明确不保存的要求
 - 文件名含日期与主题，如 YYYY-MM-DD-方案-xxx.md；除非用户要求，不重复贴全文
 
 ## 凭证与安全
