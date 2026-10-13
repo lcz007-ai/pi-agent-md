@@ -6,7 +6,7 @@
 
 - [`AGENTS.md`](AGENTS.md)：本机最新的全局协作规范范本，适合放入 Pi agent 目录。
 - [`APPEND_SYSTEM.md`](APPEND_SYSTEM.md)：个人补充规则范本，由 Pi 追加到默认 system prompt；其中含有个人环境和模型路由偏好，复制前请按自己的环境修改。
-- [`2026-10-11-项目AGENTS模板.md`](2026-10-11-项目AGENTS模板.md)：项目级模板。复制到项目根目录并命名为 `AGENTS.md`，只填写该项目特有、助手不易推断且经常需要的事实。
+- [`项目AGENTS模板.md`](项目AGENTS模板.md)：项目级模板。复制到项目根目录并命名为 `AGENTS.md`，只填写该项目特有、助手不易推断且经常需要的事实。
 
 
 
