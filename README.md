@@ -5,8 +5,8 @@
 ## 文件
 
 - [`AGENTS.md`](AGENTS.md)：本机最新的全局协作规范范本，适合放入 Pi agent 目录。
-- [`APPEND_SYSTEM.md`](APPEND_SYSTEM.md)：个人记忆和规则范本，由 Pi 追加到默认 system prompt；其中含有个性化配置,建议按具体条件二次配置(系统环境、技能、插件等)。
-- [`项目AGENTS模板.md`](项目AGENTS模板.md)：项目级模板。复制到项目根目录并命名为 `AGENTS.md`，只填写该项目特有、助手不易推断且经常需要的事实。
+- [`APPEND_SYSTEM(for windows).md`](<APPEND_SYSTEM (for windows).md>) 与 [`APPEND_SYSTEM(for mac).md`](<APPEND_SYSTEM (for mac).md>)：个人记忆和规则范本（按平台取用，复制到 agent 目录时去掉后缀），由 Pi 追加到默认 system prompt；其中含有个性化配置,建议按具体条件二次配置(系统环境、技能、插件等)。
+- [`项目AGENTS.md`](项目AGENTS.md)：项目级模板。复制到项目根目录并命名为 `AGENTS.md`，只填写该项目特有、助手不易推断且经常需要的事实。
 
 
 
@@ -20,19 +20,19 @@ AGENTS.md          → <agent-dir>/AGENTS.md
 
 ### 2.配置记忆(可选)
 ```text
-APPEND_SYSTEM.md   → <agent-dir>/APPEND_SYSTEM.md
+APPEND_SYSTEM(for windows/mac).md → <agent-dir>/APPEND_SYSTEM.md
 ``` 
 按需取用:
-- 注意把`(for mac)`这些后缀去掉
+- Windows 用 `(for windows)`、macOS 用 `(for mac)` 版本，注意把后缀去掉
 - 对个人模型、环境和插件工具的约定,按需调整。
 - 不要将 API key、token 等明文凭证放入其中.
    
 ### 3.项目规则(可选)
 ```text
-APPEND_SYSTEM.md   → <project-dir>/AGENTS.md
+项目AGENTS.md      → <project-dir>/AGENTS.md
 ```
 按需取用:
-- 手动复制 [`项目AGENTS模板.md`](项目AGENTS模板.md) 到目标项目根目录并重命名为 `AGENTS.md`,**再让AI填写具体内容**.
+- 手动复制 [`项目AGENTS.md`](项目AGENTS.md) 到目标项目根目录并重命名为 `AGENTS.md`,**再让AI填写具体内容**.
 - 填入该项目的技术栈、命令、约束和已知坑。项目级 system prompt 或设置放在项目 `.pi/` 目录，并注意项目信任提示。
  
 
